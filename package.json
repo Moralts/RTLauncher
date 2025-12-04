@@ -4,9 +4,10 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
+    "dev": "cd RTL-WebUI && pnpm dev",
+    "build": "cd RTL-WebUI && pnpm build",
+    "preview": "cd RTL-WebUI && pnpm build",
+    "lint": "cd RTL-WebUI && pnpm lint",
     "tauri": "tauri"
   },
   "dependencies": {

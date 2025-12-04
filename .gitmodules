@@ -1,0 +1,3 @@
+[submodule "RTL-WebUI"]
+	path = RTL-WebUI
+	url = https://github.com/Moralts/RTL-WebUI.git
