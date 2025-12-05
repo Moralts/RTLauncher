@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "rtlauncher",
+  "productName": "RTLauncher",
   "version": "0.1.0",
-  "identifier": "com.rtlaucher.dev",
+  "identifier": "com.rtlauncher.dev",
   "build": {
     "beforeDevCommand": "cd RTL-WebUI && pnpm dev",
     "devUrl": "http://localhost:3000",
