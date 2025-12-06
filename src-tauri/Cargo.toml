@@ -2,7 +2,7 @@
 name = "RTLauncher"
 version = "0.1.0"
 description = "A Minecraft Launcher for redstone player"
-authors = ["RTLauncher-DevGroup"]
+authors = ["RTLauncher Contributors"]
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
