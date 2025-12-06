@@ -13,6 +13,7 @@ body:
         请尽可能完整且详细地填写所有表单项，以便我们以最高效率并准确的排查故障和诊断问题。
         **错误填写或者没有仔细检查末尾的检查清单，将导致此 Issue 被立刻关闭。**
         **只有最新版本的 RTLauncher 才会得到支持，任何非最新版本的 Issue 将被关闭**
+        UI 有关问题请移步至 [RTL-WebUI](https://github.com/Moralts/RTL-WebUI)
   - type: input
     attributes:
       label: "版本号 - Version"
