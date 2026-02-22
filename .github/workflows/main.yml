@@ -1,23 +1,24 @@
 name: 'Tauri App Build Test'
 
 on:
-  push:
+  pull_request:
+    types: [labeled]
     branches:
       - main
 
-# This workflow will build your tauri app without uploading it anywhere.
-
 jobs:
   test-tauri:
+    if: github.event.label.name == '构建'
+    
     strategy:
       fail-fast: false
       matrix:
         include:
-          - platform: 'macos-latest' # for Arm based macs (M1 and above).
+          - platform: 'macos-latest'
             args: '--target aarch64-apple-darwin'
-          - platform: 'macos-latest' # for Intel based macs.
+          - platform: 'macos-latest'
             args: '--target x86_64-apple-darwin'
-          - platform: 'ubuntu-22.04' # for Tauri v1 you could replace this with ubuntu-20.04.
+          - platform: 'ubuntu-22.04'
             args: ''
           - platform: 'windows-latest'
             args: ''
@@ -26,40 +27,31 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: setup node
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: lts/*
 
-      - name: enable corepack
-        run: corepack enable
+      - run: corepack enable
 
-      - name: install Rust stable
-        uses: dtolnay/rust-toolchain@stable
+      - uses: dtolnay/rust-toolchain@stable
         with:
-          # Those targets are only used on macos runners so it's in an `if` to slightly speed up windows and linux builds.
           targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
 
-      - name: install dependencies (ubuntu only)
-        if: matrix.platform == 'ubuntu-22.04' # This must match the platform value defined above.
+      - if: matrix.platform == 'ubuntu-22.04'
         run: |
           sudo apt-get update
           sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
 
-      - name: install frontend dependencies
-        run: pnpm install
+      - run: pnpm install
 
-      # If tagName and releaseId are omitted tauri-action will only build the app and won't try to upload any assets.
       - uses: tauri-apps/tauri-action@v0
-        id: tauri-build  # 添加 id 以便后续引用
+        id: tauri-build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           args: ${{ matrix.args }}
 
-      # ===== 上传构建产物 =====
-      - name: upload artifacts (macOS)
-        if: matrix.platform == 'macos-latest'
+      - if: matrix.platform == 'macos-latest'
         uses: actions/upload-artifact@v4
         with:
           name: tauri-app-${{ matrix.args == '--target aarch64-apple-darwin' && 'macos-arm64' || 'macos-x64' }}
@@ -68,8 +60,7 @@ jobs:
             src-tauri/target/*/release/bundle/**/*.app
           if-no-files-found: warn
 
-      - name: upload artifacts (Ubuntu)
-        if: matrix.platform == 'ubuntu-22.04'
+      - if: matrix.platform == 'ubuntu-22.04'
         uses: actions/upload-artifact@v4
         with:
           name: tauri-app-linux
@@ -78,8 +69,7 @@ jobs:
             src-tauri/target/release/bundle/**/*.deb
           if-no-files-found: warn
 
-      - name: upload artifacts (Windows)
-        if: matrix.platform == 'windows-latest'
+      - if: matrix.platform == 'windows-latest'
         uses: actions/upload-artifact@v4
         with:
           name: tauri-app-windows
