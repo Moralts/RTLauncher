@@ -159,14 +159,16 @@ export function TitleBar({ className }: TitleBarProps) {
           )}
         </WindowButton>
 
-        <button
+        <Button
           type="button"
+          variant="ghost"
+          size="icon"
+          className="h-full w-11 rounded-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0 transition-colors hover:bg-destructive hover:text-white active:bg-destructive/90 dark:hover:bg-red-600 dark:active:bg-red-700"
           onClick={handleClose}
           title="关闭"
-          className="h-full w-11 flex items-center justify-center text-foreground hover:bg-red-500 hover:text-white active:bg-red-600 transition-colors"
         >
           <X className="size-4" />
-        </button>
+        </Button>
       </div>
     </div>
   )
