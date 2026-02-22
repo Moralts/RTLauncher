@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 # This workflow will build your tauri app without uploading it anywhere.
 
