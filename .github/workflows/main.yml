@@ -1,4 +1,4 @@
-name: 'test-on-pr'
+name: 'Tauri App Build Test'
 
 on:
   push:
